@@ -17,9 +17,9 @@ end
 template '/etc/httpd/conf.d/r_proxy.conf' do
   action :create
   source 'r_proxy.conf.erb'
-  variables ({
-   :target_ip => '123.123.123.123'
-   })
+  # variables ({
+  #  :target_ip => '123.123.123.123'
+  #  })
    notifies :restart, 'service[httpd]', :immediately
   backup 10
 end
