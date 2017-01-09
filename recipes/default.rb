@@ -24,29 +24,43 @@ template '/etc/httpd/conf.d/r_proxy.conf' do
   backup 10
 end
 
+# instal openLDAP
+yum_package 'openldap-servers' do
+  action :install
+end
 
-# yum_package 'openldap-servers' do
-#   action :install
-# end
-#
-# service 'slapd' do
-#   action [ :start, :enable]
-# end
-#
-# yum_package 'openldap-clients' do
-#   action :install
-# end
-#
-# yum_package 'epel-release' do
-#   action :install
-# end
-#
-# yum_package 'phpldapadmin' do
-#   action :install
-# end
-#
-# template '/etc/httpd/conf.d/phpldapadmin.conf' do
-#   action :create
-#   source 'phpldapadmin.conf.erb'
-#   backup 10
-# end
+service 'slapd' do
+  action [ :start, :enable]
+end
+
+yum_package 'openldap-clients' do
+  action :install
+end
+
+# install phpLDAPadmin
+yum_package 'epel-release' do
+  action :install
+end
+
+yum_package 'phpldapadmin' do
+  action :install
+end
+
+template '/etc/httpd/conf.d/phpldapadmin.conf' do
+  action :create
+  source 'phpldapadmin.conf.erb'
+  backup 10
+end
+
+template '/etc/phpldapadmin/config.php' do
+  action :create
+  source 'config.php.erb'
+  backup 10
+end
+
+# set authorization
+template '/etc/httpd/conf.d/auth_ldap.conf' do
+  action :create
+  source 'auth_ldap.conf.erb'
+  backup 10
+end

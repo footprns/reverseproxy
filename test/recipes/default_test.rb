@@ -13,7 +13,7 @@ unless os.windows?
 end
 
 describe port(80) do
-  it { should_not be_listening }
+  it { should be_listening }
   skip 'This is an example test, replace with your own test.'
 end
 
@@ -30,4 +30,14 @@ end
 describe file('/etc/httpd/conf.d/phpldapadmin.conf') do
   its(:content) { should match /Require all granted/ }
   skip 'phpLDAPadmin is accessible'
+end
+
+describe file('/etc/phpldapadmin/config.php') do
+  its(:content) { should match /ou=goldtest,o=slb/ }
+  skip 'phpLDAPadmin is configured'
+end
+
+describe file('/etc/httpd/conf.d/auth_ldap.conf') do
+  its(:content) { should match /AuthLDAPURL/ }
+  skip 'LDAP auth is configured'
 end
