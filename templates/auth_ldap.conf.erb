@@ -1,0 +1,12 @@
+# add follows to the end
+
+<Directory /var/www/html/auth-ldap>
+#       SSLRequireSSL
+    AuthName "LDAP Authentication"
+    AuthType Basic
+    AuthBasicProvider ldap
+#    AuthLDAPURL ldap://<%= node['reverseproxy']['target_ip'] %>/dc=test,dc=com?uid?sub?(objectClass=*)
+    AuthLDAPURL "ldap://localhost/ou=Group,<%= node['reverseproxy']['array'] %>?cn?sub?(objectClass=*)"
+    Require valid-user
+#    Require ldap-filter objectClass=posixAccount
+</Directory>
