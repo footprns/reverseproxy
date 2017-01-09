@@ -20,7 +20,7 @@ template '/etc/httpd/conf.d/r_proxy.conf' do
   # variables ({
   #  :target_ip => '123.123.123.123'
   #  })
-   notifies :restart, 'service[httpd]', :immediately
+  notifies :restart, 'service[httpd]', :immediately
   backup 10
 end
 
